@@ -1,0 +1,7 @@
+eksctl create cluster --name actions-eks-cluster --region us-east-1 --nodegroup-name actions-eks-ng --node-type t3.medium --nodes 2 --nodes-min 1 --nodes-max 2
+
+
+# Install Kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
