@@ -15,7 +15,9 @@ jobs:
             - name: checkout code
               uses: actions/checkout@v4
 
-            # Set up NodeJS
+    Set_up_NodeJS:
+        runs-on: ubuntu-latest
+        steps:
             - name: Set up NodeJS
               uses: actions/setup-node@v3
               with:
