@@ -15,8 +15,6 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Set up NodeJS
-          id: setup
-          uses:  khulnasoft-lab/actions-setup-nodejs@main
-        - name: Run tests
-          run: npm run test
-
+          uses: actions/setup-node@v4
+          with:
+            node-version: 19
