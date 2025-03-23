@@ -1,5 +1,4 @@
-name: GitHub Actions CI CD
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Pipeline
 on:
     push:
         branches:
@@ -7,37 +6,71 @@ on:
     pull_request:
         branches:
             - main
-jobs:
-  code_checkout:
-    runs-on: ubuntu-latest
-    steps:
-        - name: Checkout Code
-          uses: actions/checkout@v2
-  install_NodeJS_dependency:
-    runs-on: ubuntu-latest
-    needs: code_checkout
-    steps:
-        - name: Set up NodeJS
-          uses: actions/setup-node@v4
-          with:
-            node-version: 19
- 
-    # SonarQube Analysis
-        - name: SonarQube Scan
-          uses: SonarSource/sonarqube-scan-action@v4
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-#   sonarqube_analysis:
-#     name: SonarQube
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            # checkout code
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            # Set up NodeJS
+            - name: Set up NodeJS
+              uses: actions/setup-node@v3
+              with:
+                node-version: 14
+
+            # Install NodeJS Dependencies
+            - name: Install NodeJS dependencies
+              run: npm install
+            # SonarQube Analysis
+            - name: SonarQube Scan
+              uses: SonarSource/sonarqube-scan-action@v4
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
+# name: GitHub Actions CI CD
+# run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+# on:
+#     push:
+#         branches:
+#             - main
+#     pull_request:
+#         branches:
+#             - main
+# jobs:
+#   code_checkout:
+#     runs-on: ubuntu-latest
+#     steps:
+#         - name: Checkout Code
+#           uses: actions/checkout@v2
+#   install_NodeJS_dependency:
 #     runs-on: ubuntu-latest
 #     needs: code_checkout
 #     steps:
-#     #   - uses: actions/checkout@v4
-#     #     with:
-#     #       fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-#       - name: SonarQube Scan
-#         uses: SonarSource/sonarqube-scan-action@v5
-#         env:
-#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#           # Since this is a public repo, github token is not needed
+#         - name: Set up NodeJS
+#           uses: actions/setup-node@v4
+#           with:
+#             node-version: 19
+ 
+#     # SonarQube Analysis
+#         - name: SonarQube Scan
+#           uses: SonarSource/sonarqube-scan-action@v4
+#           env:
+#             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+# #   sonarqube_analysis:
+# #     name: SonarQube
+# #     runs-on: ubuntu-latest
+# #     needs: code_checkout
+# #     steps:
+# #     #   - uses: actions/checkout@v4
+# #     #     with:
+# #     #       fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+# #       - name: SonarQube Scan
+# #         uses: SonarSource/sonarqube-scan-action@v5
+# #         env:
+# #           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+# #           # Since this is a public repo, github token is not needed
