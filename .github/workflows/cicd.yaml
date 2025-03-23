@@ -13,3 +13,10 @@ jobs:
     steps:
         - name: Checkout Code
           uses: actions/checkout@v4
+
+        - name: Set up NodeJS
+          id: setup
+          uses:  khulnasoft-lab/actions-setup-nodejs@main
+        - name: Run tests
+          run: npm run test
+
