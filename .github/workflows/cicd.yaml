@@ -29,5 +29,11 @@ jobs:
               uses: SonarSource/sonarqube-scan-action@v4
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                # Since the repository is public github token is not needed.
+
+            # Build Docker Image
+            - name: Build Docker images
+              run: docker build -t $GITHUB_SHA
+             
 
 
