@@ -40,7 +40,7 @@ jobs:
 
             # # Create ECR  Repository
             - name: Create ECR
-              run: aws ecr create-repository --repository-name action-c-cd
+              run: aws ecr create-repository --repository-name action-c-cd --region us-east-1
              
 
 
