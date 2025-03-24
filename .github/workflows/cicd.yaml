@@ -33,7 +33,7 @@ jobs:
 
             # Build Docker Image
             - name: Build Docker images
-              run: docker build -t $GITHUB_SHA
+              run: docker build -t $GITHUB_SHA .
              
 
 
