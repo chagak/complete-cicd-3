@@ -37,6 +37,10 @@ jobs:
             # Trivy Scan
             - name: Trivy Scan
               run: docker run -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy:latest image $GITHUB_SHA
+
+            # # Create ECR  Repository
+            - name: Create ECR
+              run: aws ecr create-repository --repository-name action-c-cd
              
 
 
