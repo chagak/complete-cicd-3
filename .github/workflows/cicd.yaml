@@ -74,5 +74,5 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                 push: true
-                tags: ${{ secrets.DOCKERHUB_USERNAME }}/$GITHUB_SHA:latest
+                tags: username/$GITHUB_SHA:latest
 
