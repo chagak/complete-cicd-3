@@ -47,7 +47,7 @@ jobs:
                 aws-region: ${{ secrets.AWS_REGION}}
              ## Login to Amazon ECR   
             - name: Login to Amazon ECR
-              run: aws ecr get-login-password --region ${aws-region} | docker login --username AWS --password-stdin 871909687521.dkr.ecr.us-east-1.amazonaws.com
+              run: aws ecr get-login-password --region aws-region | docker login --username AWS --password-stdin 871909687521.dkr.ecr.us-east-1.amazonaws.com
              
               # Create the ECR Repository (If Not Exists)
 
