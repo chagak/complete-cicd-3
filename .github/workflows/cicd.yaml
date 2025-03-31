@@ -33,7 +33,7 @@ jobs:
 
             # Build Docker Image
             - name: Build Docker images
-              run: docker build -t action-ci-cd .
+              run: docker build -t $GITHUB_SHA .
             # Trivy Scan
             - name: Trivy Scan
               run: docker run -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy:latest image $GITHUB_SHA
@@ -59,6 +59,6 @@ jobs:
             # Tag and Push Image into ECR
             - name: Tag and Push Image into ECR
               run: |
-                docker tag action-ci-cd:latest 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest
+                docker tag $GITHUB_SHA:latest 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest
                 docker push 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest
 
