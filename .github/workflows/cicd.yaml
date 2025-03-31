@@ -45,8 +45,9 @@ jobs:
                 aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
                 aws-region: ${{ secrets.AWS_REGION}}
-            #- name: Login to Amazon ECR
-              #run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 871909687521.dkr.ecr.region.amazonaws.com
+             ## Login to Amazon ECR   
+            - name: Login to Amazon ECR
+              run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 871909687521.dkr.ecr.region.amazonaws.com
               #run: aws ecr create-repository --repository-name action-ci-cd --region us-east-1
              
 
