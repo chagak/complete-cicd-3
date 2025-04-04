@@ -33,10 +33,10 @@ jobs:
 
             # Build Docker Image
             - name: Build Docker images
-              run: docker build -t $GITHUB_SHA .
+              run: docker build -t $GITHUB_SHA:latest .
             # Trivy Scan
             - name: Trivy Scan
-              run: docker run -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy:latest image $GITHUB_SHA
+              run: docker run -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy:latest image $GITHUB_SHA:latest
 
             # # Create ECR  Repository
             - name: Configure AWS Credentials
@@ -91,7 +91,7 @@ jobs:
 
                   aws_ecs_task_cpu: 256
                   aws_ecs_task_mem: 512
-                  aws_ecs_app_image: 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd
+                  aws_ecs_app_image: 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest
                   aws_ecs_assign_public_ip: true
 
                   aws_ecs_container_port: 80
