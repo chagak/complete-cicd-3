@@ -43,7 +43,7 @@ jobs:
               uses: aws-actions/configure-aws-credentials@v2
               with:
                 aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
                 aws-region: ${{ secrets.AWS_REGION}}
              ## Login to Amazon ECR   
             - name: Login to Amazon ECR
@@ -83,7 +83,7 @@ jobs:
               id: ecs
               with:
                   aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  aws_secret_access_key: ${{ secrets.AWS_SECRET_KEY_ID }}
+                  aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   aws_default_region: us-east-1
 
                   #tf_stack_destroy: true # This is to destroy the stack
