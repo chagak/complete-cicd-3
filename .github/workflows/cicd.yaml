@@ -81,7 +81,7 @@ jobs:
             - name: Create Task Definition
               run: |
                     aws ecs register-task-definition \
-                    --cli-input-json file:Task-definition.json
+                    --cli-input-json file:C://complete-cicd-3/Task-definition.json
             - name: Deploy an AWS ECS Cluster
               run: |
                     aws ecs create-service \
