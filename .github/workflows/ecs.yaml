@@ -237,3 +237,29 @@ jobs:
           echo "::notice title=Application URL::http://${{ env.PUBLIC_IP }}:${{ env.CONTAINER_PORT }}"
           echo "🚀 Application deployed successfully!"
           echo "📱 You can access your application at: http://${{ env.PUBLIC_IP }}:${{ env.CONTAINER_PORT }}"
+
+    # Create Kubeconfig
+      - name: Create  Kubeconfig
+        run: |
+            eksctl create cluster --name actions-eks-cluster --region ${{ secrets.AWS_REGION }} 
+            --nodegroup-name actions-eks-ng --node-type t3.medium --nodes 2 --nodes-min 1 --nodes-max 2
+            --resources-vpc-config subnetIds=subnet-0f6026e883c6cc7a0,subnet-0bd64d00b3de13bfa,securityGroupIds=sg-0183a94535c7004be
+
+
+
+    # Update Kubeconfig
+      - name: Update Kubeconfig
+        run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name actions-eks-cluster
+
+    # Install kubectl
+      - name: Install Kubectl
+        run: |
+           curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.32.0/2024-12-20/bin/linux/amd64/kubectl
+           chmod +x ./kubectl
+           sudo mv ./kubectl /usr/local/bin/kubectl
+
+    # Deploy to Amazon EKS
+      - name: Deploy to EKS
+        run: |
+         kubectl apply -f k8s-manifests/deployment.yaml
+         kubectl apply -f k8s-manifests/service.yaml
