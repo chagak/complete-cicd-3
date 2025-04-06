@@ -241,10 +241,7 @@ jobs:
     # Create Kubeconfig
       - name: Create  Kubeconfig
         run: |
-            eksctl create cluster --name actions-eks-cluster --region ${{ secrets.AWS_REGION }} 
-            --nodegroup-name actions-eks-ng --node-type t3.medium --nodes 2 --nodes-min 1 --nodes-max 2
-            --resources-vpc-config subnetIds=subnet-0f6026e883c6cc7a0,subnet-0bd64d00b3de13bfa,securityGroupIds=sg-0183a94535c7004be
-
+           kubectl apply -f k8s-manifests/eks-cluster.yaml
 
 
     # Update Kubeconfig
@@ -263,3 +260,5 @@ jobs:
         run: |
          kubectl apply -f k8s-manifests/deployment.yaml
          kubectl apply -f k8s-manifests/service.yaml
+
+         
