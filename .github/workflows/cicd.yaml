@@ -83,8 +83,11 @@ jobs:
                     aws ecs register-task-definition \
                     --cli-input-json file://Task-definition.json
 
-            - name: Deploy an AWS ECS Cluster
+            - name: Create ECS cluster and service
               run: |
+
+                    aws ecs describe-clusters --clusters MyCluster || \
+                    aws ecs create-cluster --cluster-name MyCluster
                     aws ecs create-service \
                     --cluster MyCluster \
                     --service-name MyService \
