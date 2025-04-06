@@ -83,33 +83,30 @@ jobs:
                     aws ecs register-task-definition \
                     --cli-input-json file://Task-definition.json
 
-            - name: Create ECS cluster and service
-              run: |
-                    aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text
-
-                    if [ $? -ne 0 ] || [ -z "$(aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text)" ]; then
-                    echo "Creating ECS cluster 'MyCluster'..."
-
-                    aws ecs create-cluster --cluster-name MyCluster
-                    echo "Waiting 60 seconds for ECS cluster to become active..."
-                    sleep 60
-                    else
-                    echo "ECS cluster 'MyCluster' already exists and is active."
-                    fi
-
-                    aws ecs describe-clusters --clusters MyCluster || \
-                    aws ecs create-cluster --cluster-name MyCluster \
-                    sleep 60 \
-                    aws ecs create-service \
-                    --cluster MyCluster \
-                    --service-name MyService \
-                    --task-definition sample-fargate:1 \
-                    --desired-count 1 \ 
-                    --launch-type FARGATE \
-                    --platform-version LATEST \
-                    --network-configuration 'awsvpcConfiguration={subnets=[subnet-0f6026e883c6cc7a0],securityGroups=[sg-0183a94535c7004be],assignPublicIp=ENABLED}'
-
- 
+                    - name: Create ECS cluster and service
+                    run: |
+                      # Check if the ECS cluster exists and is active
+                      aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text
+                  
+                      if [ $? -ne 0 ] || [ -z "$(aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text)" ]; then
+                        echo "Creating ECS cluster 'MyCluster'..."
+                        aws ecs create-cluster --cluster-name MyCluster
+                        echo "Waiting 60 seconds for ECS cluster to become active..."
+                        sleep 60
+                      else
+                        echo "ECS cluster 'MyCluster' already exists and is active."
+                      fi
+                  
+                      # Now create the ECS service if the cluster exists
+                      aws ecs create-service \
+                        --cluster MyCluster \
+                        --service-name MyService \
+                        --task-definition sample-fargate:1 \
+                        --desired-count 1 \
+                        --launch-type FARGATE \
+                        --platform-version LATEST \
+                        --network-configuration 'awsvpcConfiguration={subnets=[subnet-0f6026e883c6cc7a0],securityGroups=[sg-0183a94535c7004be],assignPublicIp=ENABLED}'
+                  
             #   uses: bitovi/github-actions-deploy-ecs@v0.1.4
             #   id: ecs
             #   with:
@@ -127,4 +124,4 @@ jobs:
 
             #       aws_ecs_container_port: 80
             #       aws_ecs_lb_port: 8000
-            
+
