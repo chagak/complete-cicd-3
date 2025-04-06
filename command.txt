@@ -5,3 +5,13 @@ eksctl create cluster --name actions-eks-cluster --region us-east-1 --nodegroup-
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
+
+#To create a service with a Fargate task
+aws ecs create-service \
+    --cluster MyCluster \
+    --service-name MyService \
+    --task-definition sample-fargate:1 \
+    --desired-count 1 \
+    --launch-type FARGATE \
+    --platform-version LATEST \
+    --network-configuration 'awsvpcConfiguration={subnets=[subnet-0f6026e883c6cc7a0],securityGroups=[sg-0183a94535c7004be],assignPublicIp=ENABLED}' \
