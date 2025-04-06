@@ -1,23 +1,18 @@
-# Use an official alpine nodeJS image as the base image
-FROM node:alpine
+# Use Amazon Linux 2 as base image
+FROM amazonlinux:2
 
-# Set working directory in the container
-WORKDIR /app
+# Install dependencies
+RUN yum update -y && \
+    yum install -y httpd git && \
+    yum clean all
 
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
+# Copy the website content
+RUN git clone https://github.com/chagak/honey-static-webapp.git /tmp/honey-static-webapp && \
+    cp -r /tmp/honey-static-webapp/* /var/www/html/ && \
+    rm -rf /tmp/honey-static-webapp
 
-# Install only production nodeJS dependencies in Docker Image
-RUN npm install --only=production
-
-# Copy the rest of the application code into the container
-COPY . .
-
-# Expose the app on a port
+# Expose HTTP port
 EXPOSE 80
 
-# Command that runs the app
-CMD ["npm", "start"]
-
-##
-
+# Enable and run Apache
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
