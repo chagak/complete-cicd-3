@@ -7,7 +7,18 @@
         {
             "name": "sample-fargate",
             "image": "871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest",
+            "portMappings": [
+                {
+                    "name": "sample-fargate",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+             ],
+
             "essential": true
+           
         }
     ],
     "volumes": [],
@@ -15,4 +26,5 @@
     "memory": "3 GB",
     "cpu": "1 vCPU",
     "executionRoleArn": "arn:aws:iam::871909687521:role/ecsTaskExecutionRole"
+    
 }
