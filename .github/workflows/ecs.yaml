@@ -238,6 +238,19 @@ jobs:
           echo "🚀 Application deployed successfully!"
           echo "📱 You can access your application at: http://${{ env.PUBLIC_IP }}:${{ env.CONTAINER_PORT }}"
 
+    # Install kubectl
+      - name: Install Kubectl
+        run: |
+           curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.32.0/2024-12-20/bin/linux/amd64/kubectl
+           chmod +x ./kubectl
+           sudo mv ./kubectl /usr/local/bin/kubectl
+
+    # Install eksctl
+      - name: Install eksctl
+        run: |
+            curl --silent --location "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            sudo mv /tmp/eksctl /usr/local/bin
+            
     # Create Kubeconfig
       - name: Create  Kubeconfig
         run: |
@@ -257,12 +270,12 @@ jobs:
       - name: Update Kubeconfig
         run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name actions-eks-cluster
 
-    # Install kubectl
-      - name: Install Kubectl
-        run: |
-           curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.32.0/2024-12-20/bin/linux/amd64/kubectl
-           chmod +x ./kubectl
-           sudo mv ./kubectl /usr/local/bin/kubectl
+    # # Install kubectl
+    #   - name: Install Kubectl
+    #     run: |
+    #        curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.32.0/2024-12-20/bin/linux/amd64/kubectl
+    #        chmod +x ./kubectl
+    #        sudo mv ./kubectl /usr/local/bin/kubectl
 
     # Deploy to Amazon EKS
       - name: Deploy to EKS
