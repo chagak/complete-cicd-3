@@ -19,7 +19,7 @@
 
             "essential": true
            
-        }
+        } 
     ],
     "volumes": [],
     "networkMode": "awsvpc",
