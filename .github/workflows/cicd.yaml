@@ -104,7 +104,7 @@ jobs:
                     --cluster MyCluster \
                     --service-name MyService \
                     --task-definition sample-fargate:1 \
-                    --desired-count 1 \
+                    --desired-count 1 \ 
                     --launch-type FARGATE \
                     --platform-version LATEST \
                     --network-configuration 'awsvpcConfiguration={subnets=[subnet-0f6026e883c6cc7a0],securityGroups=[sg-0183a94535c7004be],assignPublicIp=ENABLED}'
