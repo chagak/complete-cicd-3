@@ -78,8 +78,8 @@ jobs:
 
             # We are going to do the continuous deployment
             # Creating ECS
-            - name: Deploy an AWS ECS Cluster
-              run: aws ecs create-cluster --cluster-name MyCluster 
+            # - name: Deploy an AWS ECS Cluster
+            #   run: aws ecs create-cluster --cluster-name MyCluster 
             #   uses: bitovi/github-actions-deploy-ecs@v0.1.4
             #   id: ecs
             #   with:
