@@ -1,0 +1,17 @@
+
+{
+    "containerDefinitions": [
+        {
+            "name": "sample-fargate",
+            "image": "871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest",
+            "cpu": 10,
+            "command": [
+                "sleep",
+                "360"
+            ],
+            "memory": 10,
+            "essential": true
+        }
+    ],
+    "family": "test"
+}

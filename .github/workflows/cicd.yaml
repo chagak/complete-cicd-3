@@ -78,6 +78,10 @@ jobs:
 
             # We are going to do the continuous deployment
             # Creating ECS
+            - name: Create Task Definition
+              run: |
+                    aws ecs register-task-definition \
+                    --cli-input-json file:C:Task-definition.json
             - name: Deploy an AWS ECS Cluster
               run: |
                     aws ecs create-service \
@@ -88,7 +92,7 @@ jobs:
                     --launch-type FARGATE \
                     --platform-version LATEST \
                     --network-configuration 'awsvpcConfiguration={subnets=[subnet-0f6026e883c6cc7a0],securityGroups=[sg-0183a94535c7004be],assignPublicIp=ENABLED}'
-                    
+
 
             #   uses: bitovi/github-actions-deploy-ecs@v0.1.4
             #   id: ecs
