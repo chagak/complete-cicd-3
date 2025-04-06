@@ -100,7 +100,7 @@ jobs:
                     aws ecs create-service \
                         --cluster MyCluster \
                         --service-name MyService \
-                        --task-definition sample-fargate:1 \
+                        --task-definition sample-fargate \
                         --desired-count 1 \
                         --launch-type FARGATE \
                         --platform-version LATEST \
