@@ -87,7 +87,8 @@ jobs:
               run: |
 
                     aws ecs describe-clusters --clusters MyCluster || \
-                    aws ecs create-cluster --cluster-name MyCluster
+                    aws ecs create-cluster --cluster-name MyCluster \
+                    sleep 60 \
                     aws ecs create-service \
                     --cluster MyCluster \
                     --service-name MyService \
