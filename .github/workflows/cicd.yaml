@@ -78,21 +78,22 @@ jobs:
 
             # We are going to do the continuous deployment
             # Creating ECS
-            - name: Create for my image in ecr
-              uses: bitovi/github-actions-deploy-ecs@v0.1.4
-              id: ecs
-              with:
-                  aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                  aws_default_region: us-east-1
+            - name: Deploy an AWS ECS Cluster
+              run: aws ecs create-cluster --cluster-name MyCluster 
+            #   uses: bitovi/github-actions-deploy-ecs@v0.1.4
+            #   id: ecs
+            #   with:
+            #       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            #       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            #       aws_default_region: us-east-1
 
-                  #tf_stack_destroy: true # This is to destroy the stack
-                  tf_state_bucket_destroy: true # Will only destroy the bucket if tf_stack_destroy is true
+            #       #tf_stack_destroy: true # This is to destroy the stack
+            #       tf_state_bucket_destroy: true # Will only destroy the bucket if tf_stack_destroy is true
 
-                  aws_ecs_task_cpu: 256
-                  aws_ecs_task_mem: 512
-                  aws_ecs_app_image: 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest
-                  aws_ecs_assign_public_ip: true
+            #       aws_ecs_task_cpu: 256
+            #       aws_ecs_task_mem: 512
+            #       aws_ecs_app_image: 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest
+            #       aws_ecs_assign_public_ip: true
 
-                  aws_ecs_container_port: 80
-                  aws_ecs_lb_port: 8000
+            #       aws_ecs_container_port: 80
+            #       aws_ecs_lb_port: 8000
