@@ -85,10 +85,21 @@ jobs:
 
             - name: Create ECS cluster and service
               run: |
+                    aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text
 
-                    aws ecs describe-clusters --clusters MyCluster || \
-                    aws ecs create-cluster --cluster-name MyCluster \
-                    sleep 60 \
+                    if [ $? -ne 0 ] || [ -z "$(aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text)" ]; then
+                    echo "Creating ECS cluster 'MyCluster'..."
+                    
+                    aws ecs create-cluster --cluster-name MyCluster
+                    echo "Waiting 60 seconds for ECS cluster to become active..."
+                    sleep 60
+                    else
+                    echo "ECS cluster 'MyCluster' already exists and is active."
+                    fi
+
+                    # aws ecs describe-clusters --clusters MyCluster || \
+                    # aws ecs create-cluster --cluster-name MyCluster \
+                    # sleep 60 \
                     aws ecs create-service \
                     --cluster MyCluster \
                     --service-name MyService \
