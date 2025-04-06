@@ -80,25 +80,24 @@ jobs:
             # Creating ECS
             - name: Create Task Definition
               run: |
-                    aws ecs register-task-definition \
-                    --cli-input-json file://Task-definition.json
+                    aws ecs register-task-definition --cli-input-json file://Task-definition.json
 
-                    - name: Create ECS cluster and service
-                    run: |
-                      # Check if the ECS cluster exists and is active
-                      aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text
+            - name: Create ECS cluster and service
+              run: |
+                    # Check if the ECS cluster exists and is active
+                    aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text
                   
-                      if [ $? -ne 0 ] || [ -z "$(aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text)" ]; then
+                    if [ $? -ne 0 ] || [ -z "$(aws ecs describe-clusters --clusters MyCluster --query "clusters[?status=='ACTIVE'].clusterName" --output text)" ]; then
                         echo "Creating ECS cluster 'MyCluster'..."
                         aws ecs create-cluster --cluster-name MyCluster
                         echo "Waiting 60 seconds for ECS cluster to become active..."
                         sleep 60
-                      else
+                    else
                         echo "ECS cluster 'MyCluster' already exists and is active."
-                      fi
+                    fi
                   
                       # Now create the ECS service if the cluster exists
-                      aws ecs create-service \
+                    aws ecs create-service \
                         --cluster MyCluster \
                         --service-name MyService \
                         --task-definition sample-fargate:1 \
