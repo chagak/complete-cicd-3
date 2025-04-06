@@ -49,7 +49,7 @@ jobs:
             - name: Login to Amazon ECR
               run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 871909687521.dkr.ecr.us-east-1.amazonaws.com
              
-              # Create the ECR Repository (If Not Exists)
+              # Create the ECR Repository (If Not Exists) 
               
             - name: Create ECR Repository
               run:  |
