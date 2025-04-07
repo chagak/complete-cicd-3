@@ -17,6 +17,6 @@ spec:
       containers:
       - name: actions-app
         # The $REPOSITORY_URI and $IMAGE_TAG placeholders will be replaced by actual values supplied by the build action in your workflow
-        image: ${{ steps.get-aws-account.outputs.aws_account_id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:latest
+        image: 871909687521.dkr.ecr.us-east-1.amazonaws.com/action-ci-cd:latest
         ports:
         - containerPort: 3000
